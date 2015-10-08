@@ -14,7 +14,7 @@ var staticServer = express.static(publicPath);
 app.use(staticServer);
 
 var port = process.env.PORT || 8080;
-var server = app.listen(8080);
+var server = app.listen(port);
 var io = require("socket.io")(server);
 
 io.on("connection", function(socket) {
