@@ -1,0 +1,38 @@
+Collaborative Drawing App (for "reals" now)
+===========================================
+
+In the last exercise, we designed the client-side code that we would need for the drawing app.  Now we are going to wire up that code to a server to make it a real-time app.
+
+Any time a player draws a line, a socket message needs to be sent to the server.  Then the server can broadcast that message to all the other clients.  The message will describe the characteristics of the line that was just drawn (p1, p2, thickness & color), allowing each client to draw the line on it's own canvas.
+
+OK - let's dive in.  There will be plenty of room for bonuses on this one :)
+
+
+Tasks
+=====
+
+Each task is a milestone.  Make sure your code works before moving on to the next step!
+
+1. Bring over your sketch.js & marker.js from the last exercise, and put them in the appropriate place in the public/ folder.  This is your client-side code.  Using Express, serve up that static public/ folder.
+
+2. Piggyback a Socket.IO server over Express's server.  Print a message when the server detects a new user has connected or when a user has disconnected.
+
+3. Whenever a client draws, emit a "player draw line" message to the server that carries the line information (p1, p2, color, thickness).  The server should listen for the message.  Print out the data to the console to verify everything is working.
+
+	Note: we *shouldn't* send a Marker object in our socket message. Remember that messages can't contain functions or methods?  Instead we can send an object with p1, p2, color and thickness.  Later, we'll be able to use those to reconstruct a Marker object.
+
+4. When the server receives a "player draw line" message from a client, it should broadcast an "other player draw line" message to all *other* clients.  The message should carry the same information the server received in the "player draw line" message.
+
+5. The client should have a listener that handles "other player draw line" messages.  The listener should use the message data to create a new Marker object and draw a line with it.
+
+
+BONUSES
+=======
+
+6. You could probably see this coming... deploy to Heroku!  (And when you finish the other bonuses, redeploy!)
+
+7. The server is currently just acting as a relay.  It doesn't have a record of the history of what's been drawn.  Let's say that client 1 joins and draws the most epic depiction of the Teenage Mutant Ninja Turtles popping and locking to Vanilla Ice.  When client 2 joins a moment later, she can't see anything.  We need the server to store history.  To make this happen, the server needs to maintain a *global* array that contains the draw information for every line drawn.  When a new client joins, the server needs to emit a message that sends along the whole draw history.
+
+8. I've provided you with a color palette "drawer" at the bottom of the screen.  Now it's time to make those buttons functional.  Draw on your knowledge from the socket button exercise.  When a button is clicked, change the user's marker color.  Roll your own color palette (http://www.colourlovers.com/).
+
+9. When the user resizes the canvas while the app is running, things get a little wonky.  Use the p5 windowResized function to resize the canvas (http://p5js.org/reference/#/p5/windowResized).  You'll also need to emit a message to the server to ask for the history to be sent. 

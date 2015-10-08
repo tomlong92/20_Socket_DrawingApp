@@ -1,0 +1,17 @@
+{
+  "name": "drawing-app",
+  "version": "1.0.0",
+  "description": "Socket Drawing App",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tom Long",
+  "license": "ISC"
+}
